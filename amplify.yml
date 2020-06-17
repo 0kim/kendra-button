@@ -1,11 +1,11 @@
 version: 0.1
+backend:
+  phases:
+    build:
+      commands:
+        - amplifyPush --simple
 frontend:
   phases:
-    preBuild:
-      commands:
-        - cd frontend/kendra-button-front
-        - chmod +x amplify-pull.sh
-        - ./amplify-pull.sh
     build:
       commands:
         - find . -name "aws-exports.js"
