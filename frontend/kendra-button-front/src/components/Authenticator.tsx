@@ -38,6 +38,8 @@ const Authenticator = (props: Props): ReactElement => {
   };
 
   useEffect(() => {
+    checkUser();
+
     // intermittently failure
     // issue that describes same symptoms: https://github.com/aws-amplify/amplify-js/issues/6155#issue-644662860
     // only error occurs in development
