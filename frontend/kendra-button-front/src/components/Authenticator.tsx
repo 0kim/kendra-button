@@ -38,7 +38,7 @@ const Authenticator = (props: Props): ReactElement => {
   };
 
   useEffect(() => {
-    checkUser();
+    checkUser(false);
 
     // intermittently failure
     // issue that describes same symptoms: https://github.com/aws-amplify/amplify-js/issues/6155#issue-644662860
@@ -49,7 +49,7 @@ const Authenticator = (props: Props): ReactElement => {
         case 'signIn':
           setScreen(AuthState.SignedIn);
           // setUser(data.payload.event);
-          checkUser();
+          checkUser(false);
           break;
         case 'signIn_failure':
           console.log('[Hub] signIn_failure');
