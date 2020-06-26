@@ -10,11 +10,15 @@ const oauthConfig = awsconfig.oauth
       redirectSignIn:
         process.env.NODE_ENV === 'development'
           ? 'http://localhost:3000/'
-          : awsconfig.oauth.redirectSignIn,
+          : awsconfig.oauth.redirectSignIn
+              .split(',')
+              .filter((url) => !url.includes('localhost'))[0],
       redirectSignOut:
         process.env.NODE_ENV === 'development'
           ? 'http://localhost:3000/'
-          : awsconfig.oauth.redirectSignIn,
+          : awsconfig.oauth.redirectSignOut
+              .split(',')
+              .filter((url) => !url.includes('localhost'))[0],
     }
   : {};
 const url =
