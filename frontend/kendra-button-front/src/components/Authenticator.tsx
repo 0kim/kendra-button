@@ -38,8 +38,6 @@ const Authenticator = (props: Props): ReactElement => {
   };
 
   useEffect(() => {
-    // checkUser(true);
-
     // intermittently failure
     // issue that describes same symptoms: https://github.com/aws-amplify/amplify-js/issues/6155#issue-644662860
     // only error occurs in development
@@ -48,7 +46,7 @@ const Authenticator = (props: Props): ReactElement => {
       switch (data.payload.event) {
         case 'signIn':
           setScreen(AuthState.SignedIn);
-          setUser(user);
+          setUser(data.payload.event);
           break;
         case 'signIn_failure':
           console.log('[Hub] signIn_failure');
@@ -70,7 +68,6 @@ const Authenticator = (props: Props): ReactElement => {
       setUser(res);
     } catch (e) {
       console.log('[error in google]', e);
-      // await checkUser(true);
     }
   };
   const toSignInFacebook = async (): Promise<void> => {
@@ -81,7 +78,6 @@ const Authenticator = (props: Props): ReactElement => {
       setUser(res);
     } catch (e) {
       console.log('[error in facebook]', e);
-      // await checkUser(true);
     }
   };
 
