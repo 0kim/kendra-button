@@ -48,7 +48,8 @@ const Authenticator = (props: Props): ReactElement => {
       switch (data.payload.event) {
         case 'signIn':
           setScreen(AuthState.SignedIn);
-          setUser(data.payload.event);
+          // setUser(data.payload.event);
+          checkUser();
           break;
         case 'signIn_failure':
           console.log('[Hub] signIn_failure');
@@ -92,7 +93,7 @@ const Authenticator = (props: Props): ReactElement => {
     console.log('signout');
   };
 
-  const bgClass = isLoggedIn ? `` : `bg-dark`;
+  const bgClass = screen === AuthState.SignedIn ? `` : `bg-dark`;
   return (
     <div
       className={`fullscreen ${bgClass} d-flex justify-content-center align-items-center`}
