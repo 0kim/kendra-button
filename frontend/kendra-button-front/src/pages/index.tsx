@@ -1,31 +1,27 @@
 import Amplify, { Auth } from 'aws-amplify';
 import { Authenticator, Content, Sidebar } from '../components';
 
-// import { User } from '../types';
 import awsconfig from '../aws-exports';
 import { useState } from 'react';
 
-const manualConfig = {
-  ...awsconfig,
-  oauth: awsconfig.oauth
-    ? {
-        ...awsconfig.oauth,
-        redirectSignIn:
-          process.env.NODE_ENV === 'development'
-            ? 'http://localhost:3000/'
-            : awsconfig.oauth.redirectSignIn,
-        redirectSignOut:
-          process.env.NODE_ENV === 'development'
-            ? 'http://localhost:3000/'
-            : awsconfig.oauth.redirectSignIn,
-      }
-    : {},
-};
-// const manualConfig = {}
+const oauthConfig = awsconfig.oauth
+  ? {
+      ...awsconfig.oauth,
+      redirectSignIn:
+        process.env.NODE_ENV === 'development'
+          ? 'http://localhost:3000/'
+          : awsconfig.oauth.redirectSignIn,
+      redirectSignOut:
+        process.env.NODE_ENV === 'development'
+          ? 'http://localhost:3000/'
+          : awsconfig.oauth.redirectSignIn,
+    }
+  : {};
 const url =
-  'https://f9hg6qjmt8.execute-api.us-west-2.amazonaws.com/dev/graphql'; // dev
+  'https://f9hg6qjmt8.execute-api.us-west-2.amazonaws.com/dev/graphql';
 Amplify.configure({
-  ...manualConfig,
+  ...awsconfig,
+  oauth: oauthConfig,
   API: {
     graphql_endpoint: url,
     graphql_headers: async () => ({
@@ -33,6 +29,7 @@ Amplify.configure({
     }),
   },
 });
+
 const Page = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);

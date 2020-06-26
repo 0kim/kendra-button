@@ -1,3 +1,4 @@
+import { Auth, Hub } from 'aws-amplify';
 import {
   Dispatch,
   ReactElement,
@@ -7,7 +8,6 @@ import {
   useState,
 } from 'react';
 
-import { Auth } from 'aws-amplify';
 import { AuthState } from '@aws-amplify/ui-components';
 
 interface Props {
@@ -38,7 +38,22 @@ const Authenticator = (props: Props): ReactElement => {
   };
 
   useEffect(() => {
-    checkUser(true);
+    // checkUser(true);
+
+    Hub.listen('auth', (data) => {
+      console.log('[Hub] data', data);
+      switch (data.payload.event) {
+        case 'signIn':
+          setScreen(AuthState.SignedIn);
+          setUser(user);
+          break;
+        case 'signIn_failure':
+          console.log('[Hub] signIn_failure');
+          break;
+        default:
+          break;
+      }
+    });
   }, []);
 
   const toSignUp = (): void => {
@@ -52,7 +67,7 @@ const Authenticator = (props: Props): ReactElement => {
       setUser(res);
     } catch (e) {
       console.log('[error in google]', e);
-      await checkUser(true);
+      // await checkUser(true);
     }
   };
   const toSignInFacebook = async (): Promise<void> => {
@@ -63,7 +78,7 @@ const Authenticator = (props: Props): ReactElement => {
       setUser(res);
     } catch (e) {
       console.log('[error in facebook]', e);
-      await checkUser(true);
+      // await checkUser(true);
     }
   };
 
