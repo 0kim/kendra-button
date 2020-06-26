@@ -13,10 +13,10 @@ import { AuthState } from '@aws-amplify/ui-components';
 interface Props {
   setUser: Dispatch<SetStateAction<any>>;
   children: ReactNode;
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
 }
 const Authenticator = (props: Props): ReactElement => {
-  const { children, setUser, isLoggedIn } = props;
+  const { children, setUser } = props;
   const [screen, setScreen] = useState(AuthState.SignIn);
 
   const checkUser = async (retry, tryCnt = 1): Promise<void> => {
